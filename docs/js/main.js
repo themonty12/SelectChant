@@ -37,6 +37,15 @@ function addHymn() {
     return;
   }
 
+  // 입력한 성가 번호가 선택한 타입과 일치하는지 확인
+  const matchingHymn = hymns.find(
+    (h) => h.number === number && h.type === type
+  );
+  if (!matchingHymn) {
+    alert(`${number}번 성가는 ${type} 성가로 등록되어 있지 않습니다.`);
+    return;
+  }
+
   selectedHymns.push({ ...hymn, type });
   updateSelectedHymnsList();
   numberInput.value = "";
@@ -44,6 +53,7 @@ function addHymn() {
 
 function getRandomHymns() {
   const excludeNumbers = selectedHymns.map((h) => h.number);
+  console.log(`선택된 성가 : ${excludeNumbers}`);
 
   const result = {
     entrance: getRandomByType("입당", 1, excludeNumbers),
@@ -61,9 +71,17 @@ function getRandomByType(type, count, excludeNumbers) {
   );
 
   const result = [];
-  for (let i = 0; i < count && availableHymns.length > 0; i++) {
-    const randomIndex = Math.floor(Math.random() * availableHymns.length);
-    result.push(availableHymns.splice(randomIndex, 1)[0]);
+  const matchingHymns = hymns.filter(
+    (h) => h.type === type && excludeNumbers.includes(h.number)
+  );
+  result.push(...matchingHymns);
+
+  if (result.length < count) {
+    const remaining = count - result.length;
+    for (let i = 0; i < remaining && availableHymns.length > 0; i++) {
+      const randomIndex = Math.floor(Math.random() * availableHymns.length);
+      result.push(availableHymns.splice(randomIndex, 1)[0]);
+    }
   }
   return result;
 }
