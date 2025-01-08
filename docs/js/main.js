@@ -68,4 +68,53 @@ function getRandomByType(type, count, excludeNumbers) {
   return result;
 }
 
-// ... (나머지 함수들은 이전과 동일)
+function updateSelectedHymnsList() {
+  const list = document.getElementById("selectedHymnsList");
+  list.innerHTML = "";
+
+  selectedHymns.forEach((hymn, index) => {
+    const li = document.createElement("li");
+    li.innerHTML = `
+            ${hymn.type}: ${hymn.number}번 - ${hymn.title}
+            <button onclick="removeSelectedHymn(${index})">삭제</button>
+        `;
+    list.appendChild(li);
+  });
+}
+
+function removeSelectedHymn(index) {
+  selectedHymns.splice(index, 1);
+  updateSelectedHymnsList();
+}
+
+function displayResults(result) {
+  const resultDiv = document.getElementById("result");
+  resultDiv.innerHTML = `
+        <div class="result-grid">
+            <div class="hymn-category">
+                <h4>입당성가</h4>
+                ${formatHymns(result.entrance)}
+            </div>
+            <div class="hymn-category">
+                <h4>봉헌성가</h4>
+                ${formatHymns(result.offering)}
+            </div>
+            <div class="hymn-category">
+                <h4>성체성가</h4>
+                ${formatHymns(result.communion)}
+            </div>
+            <div class="hymn-category">
+                <h4>파견성가</h4>
+                ${formatHymns(result.closing)}
+            </div>
+        </div>
+    `;
+}
+
+function formatHymns(hymns) {
+  return hymns
+    .map(
+      (hymn) => `<div class="hymn-item">${hymn.number}번 - ${hymn.title}</div>`
+    )
+    .join("");
+}
