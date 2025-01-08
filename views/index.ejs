@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>랜덤 성가 선택기</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>미사 성가 선택기</h1>
+
+      <div class="selected-hymns">
+        <h2>지정 성가</h2>
+        <div class="hymn-form">
+          <input
+            type="number"
+            id="hymnNumber"
+            placeholder="성가 번호"
+            min="1"
+            max="400"
+          />
+          <select id="hymnType">
+            <option value="입당">입당</option>
+            <option value="봉헌">봉헌</option>
+            <option value="성체">성체</option>
+            <option value="파견">파견</option>
+          </select>
+          <button onclick="addHymn()">추가</button>
+        </div>
+        <ul id="selectedHymnsList"></ul>
+      </div>
+
+      <button class="random-button" onclick="getRandomHymns()">
+        랜덤 선택
+      </button>
+
+      <div id="result" class="result-container"></div>
+    </div>
+    <script src="/js/main.js"></script>
+  </body>
+</html>
