@@ -1,15 +1,11 @@
 {
-  "name": "random-hymn",
+  "name": "SelectChant",
   "version": "1.0.0",
-  "main": "src/app.js",
-  "dependencies": {
-    "express": "^4.18.2",
-    "ejs": "^3.1.9",
-    "sqlite3": "^5.1.6",
-    "body-parser": "^1.20.2"
-  },
   "scripts": {
-    "start": "node src/app.js",
-    "dev": "nodemon src/app.js"
+    "build": "mkdir -p docs && cp -r src/* docs/",
+    "dev": "live-server docs"
+  },
+  "devDependencies": {
+    "live-server": "^1.2.2"
   }
 }
