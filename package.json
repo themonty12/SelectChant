@@ -1,0 +1,11 @@
+{
+  "name": "SelectChant",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "mkdir -p docs && cp -r src/* docs/",
+    "dev": "live-server docs"
+  },
+  "devDependencies": {
+    "live-server": "^1.2.2"
+  }
+}
