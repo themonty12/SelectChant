@@ -35,16 +35,7 @@ function addHymn() {
   if (!hymn) {
     alert("존재하지 않는 성가 번호입니다.");
     return;
-  }
-
-  // 입력한 성가 번호가 선택한 타입과 일치하는지 확인
-  const matchingHymn = hymns.find(
-    (h) => h.number === number && h.type === type
-  );
-  if (!matchingHymn) {
-    alert(`${number}번 성가는 ${type} 성가로 등록되어 있지 않습니다.`);
-    return;
-  }
+  }  
 
   selectedHymns.push({ ...hymn, type });
   updateSelectedHymnsList();
@@ -67,12 +58,12 @@ function getRandomHymns() {
 
 function getRandomByType(type, count, excludeNumbers) {
   const availableHymns = hymns.filter(
-    (h) => h.type === type && !excludeNumbers.includes(h.number)
+    (h) => !excludeNumbers.includes(h.number)
   );
 
   const result = [];
   const matchingHymns = hymns.filter(
-    (h) => h.type === type && excludeNumbers.includes(h.number)
+    (h) => excludeNumbers.includes(h.number)
   );
   result.push(...matchingHymns);
 
