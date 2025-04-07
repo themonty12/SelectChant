@@ -7,35 +7,95 @@
     <link rel="stylesheet" href="css/style.css" />
   </head>
   <body>
+    <div class="menu-toggle">
+      <div class="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+    </div>
+    
+    <div class="menu-overlay"></div>
+    
+    <nav class="side-menu">
+      <ul>
+        <li><a href="#" class="menu-item active" data-section="random">성가 랜덤 선택</a></li>
+        <li><a href="#" class="menu-item" data-section="search">성가 검색</a></li>
+        <li><a href="#" class="menu-item" data-section="history">지난 성가 목록</a></li>
+      </ul>
+    </nav>
+
     <div class="container">
       <h1>미사 성가 선택기</h1>
 
-      <div class="selected-hymns">
-        <h2>지정 성가</h2>
-        <div class="hymn-form">
-          <input
-            type="number"
-            id="hymnNumber"
-            placeholder="성가 번호"
-            min="1"
-            max="400"
-          />
-          <select id="hymnType">
-            <option value="입당">입당</option>
-            <option value="봉헌">봉헌</option>
-            <option value="성체">성체</option>
-            <option value="파견">파견</option>
-          </select>
-          <button onclick="addHymn()">추가</button>
+      <div id="random-section" class="section active">
+        <div class="selected-hymns">
+          <h2>지정 성가</h2>
+          <div class="hymn-form">
+            <input
+              type="number"
+              id="hymnNumber"
+              placeholder="성가 번호"
+              min="1"
+              max="400"
+            />
+            <select id="hymnType">
+              <option value="입당">입당</option>
+              <option value="봉헌">봉헌</option>
+              <option value="성체">성체</option>
+              <option value="파견">파견</option>
+            </select>
+            <button onclick="addHymn()">추가</button>
+          </div>
+          <ul id="selectedHymnsList"></ul>
         </div>
-        <ul id="selectedHymnsList"></ul>
+
+        <button class="random-button" onclick="getRandomHymns()">
+          랜덤 선택
+        </button>
+        <div id="result" class="result-container"></div>
       </div>
 
-      <button class="random-button" onclick="getRandomHymns()">
-        랜덤 선택
-      </button>
-      <div id="result" class="result-container"></div>
+      <div id="search-section" class="section">
+        <div class="search-container">
+          <h2>성가 검색</h2>
+          <div class="search-form">
+            <input type="text" id="searchInput" placeholder="성가 제목 검색" />
+            <button onclick="searchHymns()">검색</button>
+          </div>
+          <div id="searchResults" class="search-results">
+            <div class="hymn-list"></div>
+            <div class="pagination">
+              <button id="prevPage" class="page-btn" disabled>이전</button>
+              <div id="pageNumbers" class="page-numbers"></div>
+              <button id="nextPage" class="page-btn" disabled>다음</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="history-section" class="section">
+        <div class="history-container">
+          <h2>지난 성가 목록</h2>
+          <div id="historyList" class="history-list"></div>
+        </div>
+      </div>
     </div>
+    
+    <!-- 이미지 모달 -->
+    <div id="imageModal" class="modal">
+      <div class="modal-content">
+        <span class="close-modal">&times;</span>
+        <div class="modal-image-container">
+          <img id="modalImage" src="" alt="성가 이미지" />
+        </div>
+        <div class="modal-controls">
+          <button id="prevImage" class="modal-btn">이전</button>
+          <button id="nextImage" class="modal-btn">다음</button>
+        </div>
+      </div>
+    </div>
+    
     <script src="js/main.js"></script>
   </body>
 </html>
