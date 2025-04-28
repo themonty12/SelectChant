@@ -315,15 +315,33 @@ function formatHymnList(hymns) {
   return hymns.map(h => `${h.number}번`).join(', ');
 }
 
-function saveHistory() {
-  localStorage.setItem('hymnHistory', JSON.stringify(hymnHistory));
+async function saveHistory() {
+  try {
+    const response = await fetch('data/history.json', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(hymnHistory)
+    });
+    if (!response.ok) {
+      throw new Error('History 저장에 실패했습니다');
+    }
+  } catch (error) {
+    console.error('History 저장 중 오류:', error);
+  }
 }
 
-function loadHistory() {
-  const saved = localStorage.getItem('hymnHistory');
-  if (saved) {
-    hymnHistory = JSON.parse(saved);
-    updateHistoryList();
+async function loadHistory() {
+  try {
+    const response = await fetch('data/history.json');
+    if (response.ok) {
+      hymnHistory = await response.json();
+      updateHistoryList();
+    }
+  } catch (error) {
+    console.error('History 불러오기 중 오류:', error);
+    hymnHistory = [];
   }
 }
 
@@ -400,6 +418,8 @@ function addHymn() {
   }  
 
   selectedHymns.push({ ...hymn, type });
+  console.log(`선택된 성가 : `);
+  console.log(selectedHymns);
   updateSelectedHymnsList();
   numberInput.value = "";
 }
@@ -419,15 +439,19 @@ function getRandomHymns() {
 }
 
 function getRandomByType(type, count, excludeNumbers) {
+  const selectedHymnsByType = selectedHymns.filter(h => h.type === type);
+  if (selectedHymnsByType.length == count) {
+    return selectedHymnsByType;
+  } 
   const availableHymns = hymns.filter(
     (h) => !excludeNumbers.includes(h.number)
   );
 
-  const result = [];
-  const matchingHymns = hymns.filter(
-    (h) => excludeNumbers.includes(h.number)
-  );
-  result.push(...matchingHymns);
+  const result = selectedHymnsByType.length > 0 ? selectedHymnsByType : [];
+  // const matchingHymns = availableHymns.filter(
+  //   (h) => excludeNumbers.includes(h.number) && h.type === type
+  // );
+  // result.push(...matchingHymns);
 
   if (result.length < count) {
     const remaining = count - result.length;
