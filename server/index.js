@@ -5,6 +5,12 @@ const path = require('path');
 
 const app = express();
 
+app.use(cors());
+app.use(express.json());  
+
+// 데이터베이스 연결
+const {client, getHymns} = require('./api/db');
+
 
 
 // 서버 시작
